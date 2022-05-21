@@ -1,4 +1,4 @@
-/* For this project, I downloaded Spotify data from Kaggle.
+/* For this project, I downloaded Spotify data from Kaggle, which shows the top 50 songs of 2021.
 Then I created a table where I could insert the Spotify data into.
 Finally, I performed analytics on the data using SQL. */
 
@@ -41,7 +41,7 @@ FROM BIT_DB.Spotifydata
 ORDER BY popularity DESC
 LIMIT 10;
 
-#Then I found which artists had at least two songs appear in the charts
+#Then I found which artists had at least two songs appear in the top 50 list
 SELECT COUNT(track_name) as count, artist_name as artist
 FROM BIT_DB.spotifydata
 GROUP BY artist
