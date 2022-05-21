@@ -35,8 +35,20 @@ FROM BIT_DB.Spotifydata
 GROUP BY artist
 ORDER BY AVG(popularity) DESC;
 
-#Then I determined which the top 10 most popular songs, also displaying the artist and popularity score
+#Next I determined which the top 10 most popular songs, also displaying the artist and popularity score
 SELECT track_name, artist_name, popularity
 FROM BIT_DB.Spotifydata 
 ORDER BY popularity DESC
 LIMIT 10;
+
+#Then I found which artists had at least two songs appear in the charts
+SELECT COUNT(track_name) as count, artist_name as artist
+FROM BIT_DB.spotifydata
+GROUP BY artist
+HAVING count > 1
+ORDER BY count DESC
+
+#Finally I found which were the shortest songs, converting the time to seconds
+SELECT artist_name, track_name, (duration_ms/1000) as duration
+FROM BIT_DB.spotifydata
+ORDER BY duration_ms;
