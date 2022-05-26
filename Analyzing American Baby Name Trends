@@ -1,14 +1,14 @@
-# In this project, I used data published by the U.S. Social Security Administration spanning over a hundred years (1920 through 2020) 
-# to better understand American baby name tastes.
+/* In this project, I used data published by the U.S. Social Security Administration spanning over a hundred years (1920 through 2020) 
+ to better understand American baby name tastes. */
 
-# 1. Find names that have been given to over 5,000 babies of either sex every year for the 101 years from 1920 through 2020.
+# Find names that have been given to over 5,000 babies of either sex every year for the 101 years from 1920 through 2020.
 SELECT DISTINCT first_name, SUM(num) 
 FROM baby_names 
 GROUP BY first_name
 HAVING COUNT(year) = 101
 ORDER BY SUM(num) DESC;
 
-2. Timeless or trendy?
+# Classify each name's popularity according to the number of years that the name appears in the dataset.
 SELECT DISTINCT first_name, SUM(num), 
 CASE
 WHEN COUNT(first_name) > 80 THEN 'Classic'
@@ -19,9 +19,29 @@ FROM baby_names
 GROUP BY first_name
 ORDER BY first_name;
 
-3. Top-ranked female names since 1920
-4. Picking a baby name
-5. The Olivia expansion
-6. Many males with the same name
-7. Top male names over the years
-8. The most years at number one
+# Return a list of first names where the first name is Female, the name ends in A, and has been popular since 2015.
+SELECT first_name
+FROM baby_names
+WHERE sex = 'F' AND year > 2015
+    AND first_name LIKE '%a'
+GROUP BY first_name
+ORDER BY SUM(num) DESC;
+
+
+# Write a query that selects the year and the maximum num of babies given any male name in that year.
+SELECT year, MAX(num) as max_num
+FROM baby_names
+WHERE sex = 'M'
+GROUP BY year;
+
+# Look up the first_name that corresponds to the maximum number of babies given a specific male name in a year.
+SELECT b.year, b.first_name, b.num
+FROM baby_names AS b
+INNER JOIN (
+    SELECT year, MAX(num) as max_num
+    FROM baby_names
+    WHERE sex = 'M'
+    GROUP BY year) AS subquery 
+ON subquery.year = b.year 
+    AND subquery.max_num = b.num
+ORDER BY year DESC;
