@@ -1,4 +1,5 @@
-#In this project, I am querying a SQL database which contains multiples tables in order to quantify statistics about customer and order data.
+#In this project, I am querying a SQL database containing multiple tables in order to quantify statistics about customer and order data.
+
 
 #1. How many orders were placed in January?
 SELECT COUNT(orderid) FROM BIT_DB.JanSales;
